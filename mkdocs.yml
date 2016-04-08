@@ -1,1 +1,10 @@
-site_name: My Docs
+site_name: Ember 101 Workshop
+theme: readthedocs
+pages:
+- Home: index.md
+- Understanding Basics: understanding-basics.md
+- Getting started: getting-started.md
+- API: api.md
+- Blog Post: blog-post.md
+- Commenting: comments.md
+- What's Next & Thanks: next.md
