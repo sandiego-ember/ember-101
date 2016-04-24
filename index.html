@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  
+  <title>Ember 101 Workshop</title>
+  
+
+  <link rel="shortcut icon" href="./img/favicon.ico">
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="./css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="./css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="./css/highlight.css">
+
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "None";
+    var mkdocs_page_input_path = "index.md";
+    var mkdocs_page_url = "/";
+  </script>
+  
+  <script src="./js/jquery-2.1.1.min.js"></script>
+  <script src="./js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="./js/highlight.pack.js"></script>
+  <script src="./js/theme.js"></script> 
+
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href="." class="icon icon-home"> Ember 101 Workshop</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="./search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        <ul class="current">
+          
+            <li>
+    <li class="toctree-l1 current">
+        <a class="current" href=".">Home</a>
+        
+            <ul>
+            
+                <li class="toctree-l3"><a href="#pre-event-setup-instructions">Pre-event setup instructions</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#goal-reduce-the-glue">Goal: reduce the glue</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#ember-cli">Ember-CLI</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#modules">Modules</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#best-practices">Best practices</a></li>
+                
+            
+            </ul>
+        
+    </li>
+<li>
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="understanding-basics/">Understanding Basics</a>
+        
+    </li>
+<li>
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="getting-started/">Getting Started</a>
+        
+    </li>
+<li>
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="api/">API</a>
+        
+    </li>
+<li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href=".">Ember 101 Workshop</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>Home</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <p>Welcome to Ember-CLI 101 workshop hosted by <a href="http://www.meetup.com/sandiego-ember/">San Diego Ember</a>.</p>
+<h2 id="pre-event-setup-instructions">Pre-event setup instructions</h2>
+<ol>
+<li><a href="http://git-scm.com/downloads">Install Git</a></li>
+<li><a href="https://nodejs.org/download/">Install Node.js</a></li>
+<li>Setup NPM for non-sudo installation<ol>
+<li>The easiest way to do this is by checking out <a href="https://github.com/glenpike/npm-g_nosudo">this awesome shell script</a> that will do it for you</li>
+<li>NPM is the node package manager. It will automatically be installed when you install node.</li>
+<li>NPM installs packages locally (within the directory it is invoked in) for per-project modules, or globally for packages you want accessible everywhere.</li>
+<li>However, by default NPM installs global packages in a root-restricted location, requiring SUDO to install. This creates a huge headache. As an alternative, before you install any packages, follow <a href="https://github.com/sindresorhus/guides/blob/master/npm-global-without-sudo.md">this guide</a> to configure your NPM to install in your home directory without requiring sudo.</li>
+</ol>
+</li>
+<li>Install <a href="http://bower.io/">Bower</a>: <code>npm i -g bower</code></li>
+<li>Install <a href="http://ember-cli.com">Ember-CLI</a>: <code>npm i -g ember-cli</code></li>
+<li>And create a new project named 'workshop': <code>ember new workshop</code></li>
+<li>Change directories into workshop: <code>cd workshop</code> and install your local dependencies with: <code>ember install</code></li>
+</ol>
+<h2 id="goal-reduce-the-glue">Goal: reduce the glue</h2>
+<p>Web application development can involve a lot of repetition.  Attempts to reduce the repetition involved in web development has given rise to a variety of scaffolding tools and best practices.  These scaffolding tools are all trying to do the same thing:  reduce the amount of work necessary to "get started" by providing a set of "best practices" that are enabled default.  These choices include things like:</p>
+<ol>
+<li>Application directory structure</li>
+<li>Generators for common components</li>
+<li>Modularity choices (AMD/node modules/etc)</li>
+<li>Build system</li>
+<li>Asset compilation &amp; minification</li>
+<li>Testing framework and setup</li>
+</ol>
+<h2 id="ember-cli">Ember-CLI</h2>
+<p><a href="http://ember-cli.com">Ember-CLI</a> provides choices for all of the aforementioned areas.  We'll dive into some of these choices in more detail later but at a high level Ember-CLI builds in:</p>
+<ol>
+<li>A directory structure which we'll explore more later</li>
+<li>Generators for all common components</li>
+<li>ES6 modules transpiled to AMD</li>
+<li>Broccoli build tool for builds. (Fast and extensible with plugin architecture</li>
+<li>Asset minification also via Broccoli</li>
+<li>QUnit for testing</li>
+</ol>
+<h2 id="modules">Modules</h2>
+<p>Modules allow you to divide logical portions of code into smaller, functional pieces and include them as needed. As your application grows, smaller pieces of functional code become easier to manage, support, maintain and test. To learn more about JS Modules, check out <a href="http://jsmodules.io">jsmodules.io</a></p>
+<h2 id="best-practices">Best practices</h2>
+<ol>
+<li>Code<ol>
+<li><code>TitleCase</code> naming of classes</li>
+<li><code>camelCase</code> naming of attributes</li>
+<li>use modules, avoid globals</li>
+<li>reusable code → components, mixins, extend, add-ons</li>
+</ol>
+</li>
+<li>Files<ol>
+<li><code>kebab-case-naming.js</code></li>
+<li>children in subdirectory → <code>routes/invoices/edit.js</code> &amp; <code>routes/invoices/new.js</code></li>
+</ol>
+</li>
+</ol>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="understanding-basics/" class="btn btn-neutral float-right" title="Understanding Basics">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+	  
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+<div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+      
+        <span style="margin-left: 15px"><a href="understanding-basics/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+
+</body>
+</html>
+
+<!--
+MkDocs version : 0.15.0
+Build Date UTC : 2016-04-24 16:32:08.709491
+-->

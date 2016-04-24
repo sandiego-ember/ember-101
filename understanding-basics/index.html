@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  
+  <title>Understanding Basics - Ember 101 Workshop</title>
+  
+
+  <link rel="shortcut icon" href="../img/favicon.ico">
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../css/highlight.css">
+
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Understanding Basics";
+    var mkdocs_page_input_path = "understanding-basics.md";
+    var mkdocs_page_url = "/understanding-basics/";
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js"></script>
+  <script src="../js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="../js/highlight.pack.js"></script>
+  <script src="../js/theme.js"></script> 
+
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> Ember 101 Workshop</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        <ul class="current">
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="..">Home</a>
+        
+    </li>
+<li>
+          
+            <li>
+    <li class="toctree-l1 current">
+        <a class="current" href="./">Understanding Basics</a>
+        
+            <ul>
+            
+                <li class="toctree-l3"><a href="#project-organization-high-level">Project Organization: High level</a></li>
+                
+                    <li><a class="toctree-l4" href="#node-modules">node modules</a></li>
+                
+                    <li><a class="toctree-l4" href="#bower-components">bower components</a></li>
+                
+                    <li><a class="toctree-l4" href="#tests">tests</a></li>
+                
+                    <li><a class="toctree-l4" href="#public-and-vendor">public and vendor</a></li>
+                
+            
+            </ul>
+        
+    </li>
+<li>
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../getting-started/">Getting Started</a>
+        
+    </li>
+<li>
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../api/">API</a>
+        
+    </li>
+<li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">Ember 101 Workshop</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>Understanding Basics</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h2 id="project-organization-high-level">Project Organization: High level</h2>
+<p>In the <a href="..#pre-event-setup-instructions">Pre-event setup instructions</a> section you generated a new ember project called <code>workshop</code>. Let's step inside and start exploring:</p>
+<pre><code class="console">$ cd workshop
+$ ls -A
+app               .bowerrc     dist           .git        node_modules  README.md    tmp
+bower_components  Brocfile.js  .editorconfig  .gitignore  package.json  testem.json  .travis.yml
+bower.json        config       .ember-cli     .jshintrc   public        tests        vendor
+</code></pre>
+
+<h3 id="node-modules">node modules</h3>
+<p>The first things to notice is the file <code>package.json</code> and the directory <code>node_modules</code>. These are from NPM, and if you're new to NPM, take a look at what is in the <code>package.json</code> file.  This file contains information about what NPM modules are required to run and develop our app. You'll see that the packages needed for broccoli and Ember-CLI are specified here. When using Ember-CLI you won't often edit this directly. If you were to install any Ember-CLI addons yourself, you would see them show up in here as well. The packages specified in <code>package.json</code> will be installed in the <code>node_modules</code> directory.</p>
+<h3 id="bower-components">bower components</h3>
+<p>The next thing to look at is the file <code>bower.json</code> and the <code>bower_components</code> directory. These are similar to <code>package.json</code> and <code>node_modules</code>. Bower has become the de facto standard for front-end package management and our Ember-CLI application will use it to manage many of our dependencies. If you open up <code>bower.json</code> you'll see that our application comes out of the box with not only Ember but jQuery, Ember Data (for data persistence), and QUnit (for testing).</p>
+<h3 id="tests">tests</h3>
+<p>Ember-CLI comes out-of-the box with a testing framework and provides some helpers to make testing easier. You can test models, routes, controllers and components, and you can test user flows.</p>
+<p>Unit tests allow us to focus on specific functionality of a module and do not require the entire Ember application be running. Acceptance tests, also called integration tests, are used to test the flow of your app. They emulate user interactions throughout your application and using helpers you can make assertions about the expected functionality.</p>
+<h3 id="public-and-vendor">public and vendor</h3>
+<p>You may be wondering where images, fonts and other miscellaneous asset files should go. The answer is the <code>public</code> directory. These will be served at the root of your application.</p>
+<p>Similarly, you may have JavaScript or CSS dependencies that are not in bower. These can be stored in the <code>vendor</code> directory. Loading vendor files is not something we will cover in this workshop.</p>
+<h4 id="the-app-directory">The 'app' directory</h4>
+<p>The app directory is where we're going to put all of our own code.  It is carefully structured with an appropriate place for each type of module:</p>
+<pre><code class="console">$ ls app
+app.js          controllers     index.html      router.js       styles          views
+components      helpers         models          routes          templates
+</code></pre>
+
+<p>Some of these may sound familiar to you, while others may be brand new.  Don't worry yet if you don't know what all of these different pieces are.  We'll get to them one by one.</p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../getting-started/" class="btn btn-neutral float-right" title="Getting Started">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href=".." class="btn btn-neutral" title="Home"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+	  
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+<div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href=".." style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../getting-started/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+
+</body>
+</html>
