@@ -8,7 +8,7 @@
   
   
   
-  <title>Getting Started - Ember 101 Workshop</title>
+  <title>Getting started - Ember 101 Workshop</title>
   
 
   <link rel="shortcut icon" href="../img/favicon.ico">
@@ -23,7 +23,7 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "Getting Started";
+    var mkdocs_page_name = "Getting started";
     var mkdocs_page_input_path = "getting-started.md";
     var mkdocs_page_url = "/getting-started/";
   </script>
@@ -70,7 +70,7 @@
           
             <li>
     <li class="toctree-l1 current">
-        <a class="current" href="./">Getting Started</a>
+        <a class="current" href="./">Getting started</a>
         
             <ul>
             
@@ -88,6 +88,27 @@
             <li>
     <li class="toctree-l1 ">
         <a class="" href="../api/">API</a>
+        
+    </li>
+<li>
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../blog-post/">Blog Post</a>
+        
+    </li>
+<li>
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../comments/">Commenting</a>
+        
+    </li>
+<li>
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../next/">What's Next & Thanks</a>
         
     </li>
 <li>
@@ -114,7 +135,7 @@
     
       
     
-    <li>Getting Started</li>
+    <li>Getting started</li>
     <li class="wy-breadcrumbs-aside">
       
     </li>
@@ -124,32 +145,52 @@
           <div role="main">
             <div class="section">
               
-                <h2 id="ready-to-code">Ready to code!</h2>
+                <h1 id="ready-to-code">Ready to code!</h1>
+<p>Now that we have reviewed the contents ember-cli sets us up with for development, we are ready to get coding. One of the many commands ember-cli provides us is <code>serve</code> which will launch the server with live-reload. Any time we make changes to the application we should see this instantly reflected in any of the browser we have open to the server.</p>
 <ol>
-<li><code>ember install</code> (if you didn't do this before)</li>
 <li><code>ember serve</code></li>
-<li>http://localhost:4200</li>
+<li>Visit <a href="http://localhost:4200">http://localhost:4200</a> in your browser</li>
 </ol>
-<h2 id="install-bootstrap">Install Bootstrap</h2>
-<p>Let's use Bootstrap to make our website look nice.  This step isn't strictly necessary but it'll make our application snazzier.</p>
-<pre><code class="console">$ ember install:bower bootstrap
+<h1 id="install-bootstrap">Install Bootstrap</h1>
+<p>Let's use Bootstrap to make our website look nice. This step isn't strictly necessary but it'll make our application snazzier without us having to do much styling work.</p>
+<pre><code class="console">$ bower install bootstrap --save
 </code></pre>
 
-<p>Now we need to include the Bootstrap CSS into our build process.  Let's add the following to our <code>Brocfile.js</code> below <code>var app = new EmberApp();</code> and above <code>module.exports = app.toTree();</code>:</p>
+<p>Now we need to include the Bootstrap CSS into our build process.  Let's add the following to our <code>ember-cli-build.js</code> just above <code>return app.toTree();</code>:</p>
 <pre><code class="js">app.import('bower_components/bootstrap/dist/css/bootstrap.css');
 </code></pre>
 
-<p>Our <code>Brocfile.js</code> should look something like this now:</p>
-<pre><code class="js">/* global require, module */
-
+<p>Our <code>ember-cli-build.js</code> should look something like this now:</p>
+<pre><code class="js">/*jshint node:true*/
+/* global require, module */
 var EmberApp = require('ember-cli/lib/broccoli/ember-app');
 
-var app = new EmberApp();
-app.import('bower_components/bootstrap/dist/css/bootstrap.css');
-module.exports = app.toTree();
+module.exports = function(defaults) {
+  var app = new EmberApp(defaults, {
+    // Add options here
+  });
+
+  // Use `app.import` to add additional libraries to the generated
+  // output files.
+  //
+  // If you need to use different assets in different
+  // environments, specify an object as the first parameter. That
+  // object's keys should be the environment name and the values
+  // should be the asset to use in that environment.
+  //
+  // If the library that you are including contains AMD or ES6
+  // modules that you would like to import into your application
+  // please specify an object with the list of modules as keys
+  // along with the exports of each module as its value.
+
+  // Add bootstrap to our build
+  app.import('bower_components/bootstrap/dist/css/bootstrap.css');
+
+  return app.toTree();
+};
 </code></pre>
 
-<p><strong>ProTip™</strong> Ember-CLI uses live-reloading to persist changes to the browser without the need of reloading. As long as <code>http://localhost:4200/</code> is open, you'll see changes immediately. Neat! However, if you edit <code>Brocfile.js</code>, like we just did in this step, you will need to <strong>kill</strong> and <strong>restart</strong> <code>ember serve</code>. Then refresh <code>http://localhost:4200/</code>.</p>
+<p><strong>ProTip™</strong> As we mentioned before, ember-cli uses live-reloading to persist changes to the browser without the need of reloading. As long as <code>http://localhost:4200/</code> is open, you'll see changes immediately. Neat! However, if you edit <code>ember-cli-build.js</code>, like we just did in this step, you will need to <strong>kill</strong> and <strong>restart</strong> <code>ember serve</code>. Then refresh <code>http://localhost:4200/</code>.</p>
 <p>The font of our header should have changed.</p>
 <p>Now let's add a big header introducing our blog.  Let's update our <code>application.hbs</code> file to add a jumbotron header and wrap our page content in a Bootstrap <code>container</code>:</p>
 <pre><code class="handlebars">{% raw %}

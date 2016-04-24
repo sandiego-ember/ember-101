@@ -69,13 +69,15 @@
             
                 <li class="toctree-l3"><a href="#project-organization-high-level">Project Organization: High level</a></li>
                 
-                    <li><a class="toctree-l4" href="#node-modules">node modules</a></li>
+                    <li><a class="toctree-l4" href="#node-moduules">Node Moduules</a></li>
                 
-                    <li><a class="toctree-l4" href="#bower-components">bower components</a></li>
+                    <li><a class="toctree-l4" href="#bower-components">Bower Components</a></li>
                 
-                    <li><a class="toctree-l4" href="#tests">tests</a></li>
+                    <li><a class="toctree-l4" href="#tests">Tests</a></li>
                 
-                    <li><a class="toctree-l4" href="#public-and-vendor">public and vendor</a></li>
+                    <li><a class="toctree-l4" href="#public-and-vendor">Public and Vendor</a></li>
+                
+                    <li><a class="toctree-l4" href="#app">App</a></li>
                 
             
             </ul>
@@ -85,7 +87,7 @@
           
             <li>
     <li class="toctree-l1 ">
-        <a class="" href="../getting-started/">Getting Started</a>
+        <a class="" href="../getting-started/">Getting started</a>
         
     </li>
 <li>
@@ -93,6 +95,27 @@
             <li>
     <li class="toctree-l1 ">
         <a class="" href="../api/">API</a>
+        
+    </li>
+<li>
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../blog-post/">Blog Post</a>
+        
+    </li>
+<li>
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../comments/">Commenting</a>
+        
+    </li>
+<li>
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../next/">What's Next & Thanks</a>
         
     </li>
 <li>
@@ -129,30 +152,48 @@
           <div role="main">
             <div class="section">
               
-                <h2 id="project-organization-high-level">Project Organization: High level</h2>
+                <h1 id="project-organization-high-level">Project Organization: High level</h1>
 <p>In the <a href="..#pre-event-setup-instructions">Pre-event setup instructions</a> section you generated a new ember project called <code>workshop</code>. Let's step inside and start exploring:</p>
 <pre><code class="console">$ cd workshop
-$ ls -A
-app               .bowerrc     dist           .git        node_modules  README.md    tmp
-bower_components  Brocfile.js  .editorconfig  .gitignore  package.json  testem.json  .travis.yml
-bower.json        config       .ember-cli     .jshintrc   public        tests        vendor
+$ ls -1
+README.md
+app
+bower.json
+bower_components
+config
+ember-cli-build.js
+node_modules
+package.json
+public
+testem.js
+tests
+vendor
 </code></pre>
 
-<h3 id="node-modules">node modules</h3>
-<p>The first things to notice is the file <code>package.json</code> and the directory <code>node_modules</code>. These are from NPM, and if you're new to NPM, take a look at what is in the <code>package.json</code> file.  This file contains information about what NPM modules are required to run and develop our app. You'll see that the packages needed for broccoli and Ember-CLI are specified here. When using Ember-CLI you won't often edit this directly. If you were to install any Ember-CLI addons yourself, you would see them show up in here as well. The packages specified in <code>package.json</code> will be installed in the <code>node_modules</code> directory.</p>
-<h3 id="bower-components">bower components</h3>
-<p>The next thing to look at is the file <code>bower.json</code> and the <code>bower_components</code> directory. These are similar to <code>package.json</code> and <code>node_modules</code>. Bower has become the de facto standard for front-end package management and our Ember-CLI application will use it to manage many of our dependencies. If you open up <code>bower.json</code> you'll see that our application comes out of the box with not only Ember but jQuery, Ember Data (for data persistence), and QUnit (for testing).</p>
-<h3 id="tests">tests</h3>
+<h2 id="node-moduules">Node Moduules</h2>
+<p>The first thing to notice is the file <code>package.json</code> and the directory <code>node_modules</code>. These are from <a href="https://www.npmjs.com/">NPM</a>, and if you're new to NPM, take a look at what is in the <code>package.json</code> file. This file contains information about what NPM modules are required to run and develop our app. You'll see that the packages needed for broccoli and Ember-CLI are specified here. When using Ember-CLI you won't often edit this directly. If you were to install any Ember-CLI addons yourself, you would see them show up in here as well. The packages specified in <code>package.json</code> will be installed in the <code>node_modules</code> directory.</p>
+<h2 id="bower-components">Bower Components</h2>
+<p>The next thing to look at is the file <code>bower.json</code> and the <code>bower_components</code> directory. These are similar to <code>package.json</code> and <code>node_modules</code>. Bower has become the standard for front-end package management and our Ember-CLI application will use it to manage some of our dependencies. If you open up <code>bower.json</code> you'll see that our application comes out of the box with not only Ember but Ember Data (for data persistence), and QUnit (for testing).</p>
+<h2 id="tests">Tests</h2>
 <p>Ember-CLI comes out-of-the box with a testing framework and provides some helpers to make testing easier. You can test models, routes, controllers and components, and you can test user flows.</p>
-<p>Unit tests allow us to focus on specific functionality of a module and do not require the entire Ember application be running. Acceptance tests, also called integration tests, are used to test the flow of your app. They emulate user interactions throughout your application and using helpers you can make assertions about the expected functionality.</p>
-<h3 id="public-and-vendor">public and vendor</h3>
+<p>Unit tests allow us to focus on specific functionality of a module and do not require the entire Ember application be running. Acceptance tests, also called integration or acceptance tests, are used to test the flow of your app. They emulate user interactions throughout your application and using helpers you can make assertions about the expected functionality.</p>
+<h2 id="public-and-vendor">Public and Vendor</h2>
 <p>You may be wondering where images, fonts and other miscellaneous asset files should go. The answer is the <code>public</code> directory. These will be served at the root of your application.</p>
 <p>Similarly, you may have JavaScript or CSS dependencies that are not in bower. These can be stored in the <code>vendor</code> directory. Loading vendor files is not something we will cover in this workshop.</p>
-<h4 id="the-app-directory">The 'app' directory</h4>
-<p>The app directory is where we're going to put all of our own code.  It is carefully structured with an appropriate place for each type of module:</p>
-<pre><code class="console">$ ls app
-app.js          controllers     index.html      router.js       styles          views
-components      helpers         models          routes          templates
+<h2 id="app">App</h2>
+<p>The <code>app</code> directory is where we're going to put all of our own application code.  It is carefully structured with an appropriate place for each type of module:</p>
+<pre><code class="console">$ ls -1
+app.js
+components
+controllers
+helpers
+index.html
+models
+resolver.js
+router.js
+routes
+styles
+templates
 </code></pre>
 
 <p>Some of these may sound familiar to you, while others may be brand new.  Don't worry yet if you don't know what all of these different pieces are.  We'll get to them one by one.</p>
@@ -163,7 +204,7 @@ components      helpers         models          routes          templates
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../getting-started/" class="btn btn-neutral float-right" title="Getting Started">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../getting-started/" class="btn btn-neutral float-right" title="Getting started">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
         <a href=".." class="btn btn-neutral" title="Home"><span class="icon icon-circle-arrow-left"></span> Previous</a>

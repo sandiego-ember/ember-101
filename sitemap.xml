@@ -33,4 +33,28 @@
     </url>
     
 
+    
+    <url>
+     <loc>None/blog-post/</loc>
+     <lastmod>2016-04-24</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    
+
+    
+    <url>
+     <loc>None/comments/</loc>
+     <lastmod>2016-04-24</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    
+
+    
+    <url>
+     <loc>None/next/</loc>
+     <lastmod>2016-04-24</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    
+
 </urlset>

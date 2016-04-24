@@ -63,7 +63,7 @@
                 <li class="toctree-l3"><a href="#pre-event-setup-instructions">Pre-event setup instructions</a></li>
                 
             
-                <li class="toctree-l3"><a href="#goal-reduce-the-glue">Goal: reduce the glue</a></li>
+                <li class="toctree-l3"><a href="#reduce-the-glue">Reduce the glue</a></li>
                 
             
                 <li class="toctree-l3"><a href="#ember-cli">Ember-CLI</a></li>
@@ -72,7 +72,7 @@
                 <li class="toctree-l3"><a href="#modules">Modules</a></li>
                 
             
-                <li class="toctree-l3"><a href="#best-practices">Best practices</a></li>
+                <li class="toctree-l3"><a href="#naming-best-practices">Naming best practices</a></li>
                 
             
             </ul>
@@ -89,7 +89,7 @@
           
             <li>
     <li class="toctree-l1 ">
-        <a class="" href="getting-started/">Getting Started</a>
+        <a class="" href="getting-started/">Getting started</a>
         
     </li>
 <li>
@@ -97,6 +97,27 @@
             <li>
     <li class="toctree-l1 ">
         <a class="" href="api/">API</a>
+        
+    </li>
+<li>
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="blog-post/">Blog Post</a>
+        
+    </li>
+<li>
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="comments/">Commenting</a>
+        
+    </li>
+<li>
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="next/">What's Next & Thanks</a>
         
     </li>
 <li>
@@ -134,7 +155,7 @@
             <div class="section">
               
                 <p>Welcome to Ember-CLI 101 workshop hosted by <a href="http://www.meetup.com/sandiego-ember/">San Diego Ember</a>.</p>
-<h2 id="pre-event-setup-instructions">Pre-event setup instructions</h2>
+<h1 id="pre-event-setup-instructions">Pre-event setup instructions</h1>
 <ol>
 <li><a href="http://git-scm.com/downloads">Install Git</a></li>
 <li><a href="https://nodejs.org/download/">Install Node.js</a></li>
@@ -147,11 +168,11 @@
 </li>
 <li>Install <a href="http://bower.io/">Bower</a>: <code>npm i -g bower</code></li>
 <li>Install <a href="http://ember-cli.com">Ember-CLI</a>: <code>npm i -g ember-cli</code></li>
-<li>And create a new project named 'workshop': <code>ember new workshop</code></li>
-<li>Change directories into workshop: <code>cd workshop</code> and install your local dependencies with: <code>ember install</code></li>
+<li>And create a new project named <code>workshop</code>: <code>ember new workshop</code></li>
+<li>Move into the <code>workshop</code> directory: <code>cd workshop</code></li>
 </ol>
-<h2 id="goal-reduce-the-glue">Goal: reduce the glue</h2>
-<p>Web application development can involve a lot of repetition.  Attempts to reduce the repetition involved in web development has given rise to a variety of scaffolding tools and best practices.  These scaffolding tools are all trying to do the same thing:  reduce the amount of work necessary to "get started" by providing a set of "best practices" that are enabled default.  These choices include things like:</p>
+<h1 id="reduce-the-glue">Reduce the glue</h1>
+<p>Web application development can involve a lot of repetition.  Attempts to reduce the repetition involved in web development has given rise to a variety of scaffolding tools and best practices. These scaffolding tools are all trying to do the same thing: reduce the amount of work necessary to "get started" by providing a set of "best practices" that are enabled default.  These choices include things like:</p>
 <ol>
 <li>Application directory structure</li>
 <li>Generators for common components</li>
@@ -160,7 +181,7 @@
 <li>Asset compilation &amp; minification</li>
 <li>Testing framework and setup</li>
 </ol>
-<h2 id="ember-cli">Ember-CLI</h2>
+<h1 id="ember-cli">Ember-CLI</h1>
 <p><a href="http://ember-cli.com">Ember-CLI</a> provides choices for all of the aforementioned areas.  We'll dive into some of these choices in more detail later but at a high level Ember-CLI builds in:</p>
 <ol>
 <li>A directory structure which we'll explore more later</li>
@@ -170,15 +191,15 @@
 <li>Asset minification also via Broccoli</li>
 <li>QUnit for testing</li>
 </ol>
-<h2 id="modules">Modules</h2>
+<h1 id="modules">Modules</h1>
 <p>Modules allow you to divide logical portions of code into smaller, functional pieces and include them as needed. As your application grows, smaller pieces of functional code become easier to manage, support, maintain and test. To learn more about JS Modules, check out <a href="http://jsmodules.io">jsmodules.io</a></p>
-<h2 id="best-practices">Best practices</h2>
+<h1 id="naming-best-practices">Naming best practices</h1>
 <ol>
 <li>Code<ol>
 <li><code>TitleCase</code> naming of classes</li>
 <li><code>camelCase</code> naming of attributes</li>
 <li>use modules, avoid globals</li>
-<li>reusable code → components, mixins, extend, add-ons</li>
+<li>reusable code → components, mixins, add-ons</li>
 </ol>
 </li>
 <li>Files<ol>
@@ -232,5 +253,5 @@
 
 <!--
 MkDocs version : 0.15.0
-Build Date UTC : 2016-04-24 16:32:08.709491
+Build Date UTC : 2016-04-24 17:42:19.675432
 -->

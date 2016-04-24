@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  
+  <title>Commenting - Ember 101 Workshop</title>
+  
+
+  <link rel="shortcut icon" href="../img/favicon.ico">
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../css/highlight.css">
+
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Commenting";
+    var mkdocs_page_input_path = "comments.md";
+    var mkdocs_page_url = "/comments/";
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js"></script>
+  <script src="../js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="../js/highlight.pack.js"></script>
+  <script src="../js/theme.js"></script> 
+
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> Ember 101 Workshop</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        <ul class="current">
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="..">Home</a>
+        
+    </li>
+<li>
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../understanding-basics/">Understanding Basics</a>
+        
+    </li>
+<li>
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../getting-started/">Getting started</a>
+        
+    </li>
+<li>
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../api/">API</a>
+        
+    </li>
+<li>
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../blog-post/">Blog Post</a>
+        
+    </li>
+<li>
+          
+            <li>
+    <li class="toctree-l1 current">
+        <a class="current" href="./">Commenting</a>
+        
+            <ul>
+            
+                <li class="toctree-l3"><a href="#blog-comments">Blog comments</a></li>
+                
+                    <li><a class="toctree-l4" href="#make-a-comment-model">Make a comment model</a></li>
+                
+                    <li><a class="toctree-l4" href="#show-comments-on-a-blog-post">Show comments on a blog post</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#submitting-a-comment">Submitting a comment</a></li>
+                
+            
+            </ul>
+        
+    </li>
+<li>
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../next/">What's Next & Thanks</a>
+        
+    </li>
+<li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">Ember 101 Workshop</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>Commenting</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h2 id="blog-comments">Blog comments</h2>
+<h3 id="make-a-comment-model">Make a comment model</h3>
+<p>We want users to be able to comment on blog posts. We've seen how to use <code>ember generate model</code> before to create our models. In this case, we want the comment to be a <code>string</code>, and our Rails API defines the content of these comments as <code>content</code>.</p>
+<pre><code class="console">$ ember generate model comment content:string
+installing
+    create app/models/comment.js
+installing
+    create tests/unit/models/comment-test.js
+</code></pre>
+
+<p>We've seen this before.  Let's take a look at the model and see what it contains:</p>
+<pre><code class="js">import DS from 'ember-data';
+
+export default DS.Model.extend({
+  content: DS.attr('string')
+ });
+</code></pre>
+
+<p>But our comments need to be aware of our blog posts, and vice versa. We're going to add a one-to-many relationship which is built into Ember Data for us.</p>
+<p>The comments need a <code>DS.belongsTo</code> since a comment belongs to a blog post:</p>
+<pre><code class="js">export default DS.Model.extend({
+  content: DS.attr('string'),
+  blogPost: DS.belongsTo('blogPost')
+});
+</code></pre>
+
+<p>Whereas the blog posts need a <code>DS.hasMany</code> since a blog post has many comments:</p>
+<pre><code class="js">export default DS.Model.extend({
+  title: DS.attr('string'),
+  body: DS.attr('string'),
+  publishedDate: DS.attr('date'),
+  comments: DS.hasMany('comment')
+});
+</code></pre>
+
+<p>Ember has a number of different ways to define relationships like this. You can <a href="http://guides.emberjs.com/v1.11.0/models/defining-models/#toc_defining-relationships">learn more here</a>.</p>
+<p>But, this isn't going to work as we have it! Remember how our API endpoints were <code>GET /blog_posts/:id</code> and <code>GET /comments/:id</code>? Our API response returns something like this:</p>
+<pre><code class="json">{
+    &quot;blog_post&quot;: {
+        &quot;id&quot;:2,
+        &quot;title&quot;: &quot;Hello, World&quot;,
+        &quot;body&quot;: &quot;Some body!&quot;,
+        &quot;published_date&quot; :null,
+        &quot;comment_ids&quot;: [1]
+    }
+}
+</code></pre>
+
+<p>Whomever built our API has decided to keep it really lightweight and not embed the comments inside the blog posts. This means we need to fetch the comments for these posts by hitting <code>GET /comments/:id</code> for every comment on our post.</p>
+<p>Ember Data calls this an asynchronous relationship, and we need to update our model in <code>app/models/blog-post.js</code> accordingly:</p>
+<pre><code class="js">export default DS.Model.extend({
+  // We just need to change the `DS.hasMany` to be async
+  comments: DS.hasMany('comment', {async: true})
+});
+</code></pre>
+
+<p>This tells Ember Data to do exactly what we said above: fetch the comments for these posts by hitting <code>GET /comments/:id</code> for every comment on our post. This happens asynchronously, meaning that while the blog post content has loaded, the comments may take a moment to load.</p>
+<h4 id="let-the-tests-know-about-these-dependencies">Let the tests know about these dependencies</h4>
+<p>Remember when we had only one model, with no relationships to other models? Those are easy to unit test in isolation. At this point, unfortunately, your tests should be failing, because they can't find either the <code>comment</code> dependency or <code>blogPost</code> dependency. When the tests need related models, you must tell Ember's test runner to load these dependencies.</p>
+<p>Find the following block in <code>tests/unit/models/blog-post-test.js</code>.</p>
+<pre><code class="js">moduleForModel('blog-post', {
+  // Specify the other units that are required for this test.
+  needs: []
+});
+</code></pre>
+
+<p>You must fill out the <code>needs</code> property. To tell Ember about the comment dependency:</p>
+<pre><code class="js">  needs: ['model:comment']
+</code></pre>
+
+<p>For the same block in <code>tests/unit/models/comment-test.js</code>, to tell Ember about the blog post dependency:</p>
+<pre><code class="js">  needs: ['model:blogPost']
+</code></pre>
+
+<h3 id="show-comments-on-a-blog-post">Show comments on a blog post</h3>
+<p>Let's get comments to show up on a blog post by adding to our <code>app/templates/blog-post.hbs</code>:</p>
+<pre><code class="handlebars">{% raw %}
+&lt;article&gt;
+  &lt;header class=&quot;page-header&quot;&gt;
+    &lt;h1&gt;{{model.title}}&lt;/h1&gt;
+  &lt;/header&gt;
+  &lt;p&gt;{{model.body}}&lt;/p&gt;
+
+  &lt;h2&gt;Comments&lt;/h2&gt;
+  &lt;ul&gt;
+  {{#each model.comments as |comment|}}
+    &lt;li&gt;{{comment.content}}&lt;/li&gt;
+  {{/each}}
+  &lt;/ul&gt;
+&lt;/article&gt;
+{% endraw %}
+</code></pre>
+
+<p>We first loop through all the <code>model.comments</code> with Ember's (relatively new) syntax, defining <code>|comment|</code> as the local variable we use to access each <code>comment</code> model. Inside of this loop, we output the comment content we defined in our model with <code>content: DS.attr('string')</code> with <code>{% raw %}{{comment.content}}{% endraw %}</code>.</p>
+<p>But we also want a good user experience for our readers. They need to know when comments are being loaded and when there aren't any comments at all!</p>
+<p>For the loading case, we have to think about sort of object our <code>model.comments</code> happens to be. It's a <a href="http://emberjs.com/api/data/classes/DS.PromiseManyArray.html"><code>PromiseManyArray</code></a>, and in our templates we can hook into <a href="http://emberjs.com/api/classes/Ember.PromiseProxyMixin.html"><code>PromiseProxyMixin</code></a>'s loading states. We're given access to: <code>isPending</code>, <code>isSettled</code>, <code>isRejected</code>, and <code>isFulfilled</code>.</p>
+<p>We can update our template to make use of this new property:</p>
+<pre><code class="handlebars">{% raw %}
+  &lt;h2&gt;Comments&lt;/h2&gt;
+  {{#if model.comments.isPending}}
+    &lt;p&gt;Loading...&lt;/p&gt;
+  {{else}}
+    &lt;ul&gt;
+    ...
+    &lt;/ul&gt;
+  {{/if}}
+{% endraw %}
+</code></pre>
+
+<p>Now our users know when comments are still loading and aren't presented with an ugly empty list of comments. If we wanted to go above and beyond, we could add a loading indicator here to indicate the comments are being loaded, but we'll move on.</p>
+<p>We also want to handle the empty case, which is a lot easier. We can make use of Handlebars' <code>{{#if something}} {{else}} {{/if}}</code> syntax here:</p>
+<pre><code class="handlebars">{% raw %}
+  &lt;h2&gt;Comments&lt;/h2&gt;
+  {{#if model.comments.isPending}}
+    &lt;p&gt;Loading...&lt;/p&gt;
+  {{else}}
+    {{#if model.comments}}
+      &lt;ul&gt;
+      {{#each model.comments as |comment|}}
+        &lt;li&gt;{{comment.content}}&lt;/li&gt;
+      {{/each}}
+      &lt;/ul&gt;
+    {{else}}
+      &lt;p&gt;There are no comments yet.&lt;/p&gt;
+    {{/if}}
+  {{/if}}
+{% endraw %}
+</code></pre>
+
+<p>If there are comments, we iterate over them. If there are none, we add a helpful message to the user to let them know there aren't any comments yet.</p>
+<h4 id="avoiding-multiple-get-requests-for-comments">Avoiding multiple GET requests for comments</h4>
+<p>Remember once more how we were hitting <code>GET /comments/:id</code> for every comment on our post? Our API developer probably didn't expect us to make 101 server requests every time we hit a blog post with 100 comments.</p>
+<p>Ember Data once again has solved our use case with <a href="http://emberjs.com/api/data/classes/DS.ActiveModelAdapter.html#property_coalesceFindRequests"><code>coalesceFindRequests</code></a>, which lumps all of our individual <code>GET</code> requests together into a single request. If you had a <code>blogPost</code> like the following:</p>
+<pre><code class="json">{
+  &quot;blogPost&quot;: {
+    &quot;id&quot;: 1,
+    &quot;comment_ids&quot;: [1, 2]
+  }
+}
+</code></pre>
+
+<p>...and set <code>coalesceFindRequests</code> to <code>true</code> at the adapter level, Ember Data will transform our outbound requests to:</p>
+<pre><code>GET /comments?ids[]=1&amp;ids[]=2
+</code></pre>
+
+<p>Let's do that now. Open up <code>app/adapters/application.js</code> and modify it to set <code>coalesceFindRequests</code> to <code>true</code>:</p>
+<pre><code class="js">export default DS.ActiveModelAdapter.extend({
+  coalesceFindRequests: true
+});
+</code></pre>
+
+<p>That's it! Our Ember app now automatically hits a single URL for all the comments for a given post.</p>
+<p>Not that we haven't written any acceptance tests. We should, but in the interest of time this is left as an exercise for you.</p>
+<h2 id="submitting-a-comment">Submitting a comment</h2>
+<p>We can see existing comments on our blog but users have no way to submit comments yet!  Let's make a form for users to submit comments.</p>
+<p>First let's add a form to our template right before our closing <code>&lt;/article&gt;</code> tag:</p>
+<pre><code class="handlebars">{% raw %}
+&lt;hr&gt;
+
+&lt;form {{action 'addComment' on='submit'}}&gt;
+  &lt;div class=&quot;form-group&quot;&gt;
+    {{textarea value=commentContent class='form-control' rows='3'}}
+  &lt;/div&gt;
+  &lt;button type=&quot;submit&quot; class=&quot;btn btn-primary&quot;&gt;Add My Comment!&lt;/button&gt;
+&lt;/form&gt;
+{% endraw %}
+</code></pre>
+
+<p>We need to handle our <code>addComment</code> action and actually save a new comment.  We should use a controller to handle this action.  Let's generate a controller for our blog post page:</p>
+<pre><code class="console">$ ember generate controller blog-post
+installing
+  create app/controllers/blog-post.js
+  installing
+    create tests/unit/controllers/blog-post-test.js
+</code></pre>
+
+<p>Now let's open up a controller file and add our action:</p>
+<pre><code class="javascript">import Ember from 'ember';
+
+export default Ember.Controller.extend({
+  actions: {
+    addComment: function() {
+      var controller = this;
+      this.store.createRecord('comment', {
+        blogPost: this.get('content'),
+        content: this.get('commentContent')
+      }).save().then(function() {
+        controller.set('commentContent', '');
+      });
+    }
+  }
+});
+</code></pre>
+
+<p>That's some chaining!  What's going on here?</p>
+<p>So our <code>addComment</code> action first creates a <code>Comment</code> record and puts it in our <code>ember-data</code> store in our browser, with the blog post and comment content text fields filled in.  Nothing has been submitted to the server at this point.</p>
+<p>Our <code>createRecord</code> call returns our newly created comment model.  On this model we immediately call <code>save</code> to save it to the server, creating our new comment.  The <code>save</code> call returns a promise that will resolve when the API call returns with a success response.  By using our promise's <code>then</code> function, we supplied a function to call after our promise resolves.  Our post-resolve function will clear out the comment content so we can submit another comment if we wish.</p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../next/" class="btn btn-neutral float-right" title="What's Next & Thanks">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../blog-post/" class="btn btn-neutral" title="Blog Post"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+	  
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+<div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href="../blog-post/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../next/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+
+</body>
+</html>

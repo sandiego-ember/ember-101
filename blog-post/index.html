@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  
+  <title>Blog Post - Ember 101 Workshop</title>
+  
+
+  <link rel="shortcut icon" href="../img/favicon.ico">
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../css/highlight.css">
+
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Blog Post";
+    var mkdocs_page_input_path = "blog-post.md";
+    var mkdocs_page_url = "/blog-post/";
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js"></script>
+  <script src="../js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="../js/highlight.pack.js"></script>
+  <script src="../js/theme.js"></script> 
+
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> Ember 101 Workshop</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        <ul class="current">
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="..">Home</a>
+        
+    </li>
+<li>
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../understanding-basics/">Understanding Basics</a>
+        
+    </li>
+<li>
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../getting-started/">Getting started</a>
+        
+    </li>
+<li>
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../api/">API</a>
+        
+    </li>
+<li>
+          
+            <li>
+    <li class="toctree-l1 current">
+        <a class="current" href="./">Blog Post</a>
+        
+            <ul>
+            
+                <li class="toctree-l3"><a href="#blog-post-model">Blog post model</a></li>
+                
+                    <li><a class="toctree-l4" href="#make-a-blog-post-model">Make a blog post model</a></li>
+                
+                    <li><a class="toctree-l4" href="#test-our-blog-post-model">Test our blog post model</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#adding-blog-posts-to-our-homepage">Adding blog posts to our homepage</a></li>
+                
+                    <li><a class="toctree-l4" href="#create-the-route">Create the route</a></li>
+                
+                    <li><a class="toctree-l4" href="#update-the-template">Update the template</a></li>
+                
+                    <li><a class="toctree-l4" href="#the-magic-of-ember-data">The magic of Ember-Data</a></li>
+                
+                    <li><a class="toctree-l4" href="#handlebars-link-to-helper">Handlebars link-to helper</a></li>
+                
+                    <li><a class="toctree-l4" href="#acceptance-testing">Acceptance testing</a></li>
+                
+            
+            </ul>
+        
+    </li>
+<li>
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../comments/">Commenting</a>
+        
+    </li>
+<li>
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../next/">What's Next & Thanks</a>
+        
+    </li>
+<li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">Ember 101 Workshop</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>Blog Post</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h2 id="blog-post-model">Blog post model</h2>
+<h3 id="make-a-blog-post-model">Make a blog post model</h3>
+<p>For our test application, we're going to create a blog.  Let's start off by using a generator to create a model for the blogPost.  We'll give it a couple of basic fields and take a look at what happens.</p>
+<pre><code class="console">$ ember generate model blogPost title:string body:string
+installing
+    create app/models/blog-post.js
+installing
+    create tests/unit/models/blog-post-test.js
+</code></pre>
+
+<p>OK, Ember-CLI has just created for us both a model file in <code>app/models</code> and a test file in <code>tests/unit/models</code>.  Let's take a look at the model and see what it contains:</p>
+<pre><code class="js">import DS from 'ember-data';
+
+export default DS.Model.extend({
+  title: DS.attr('string'),
+  body: DS.attr('string')
+ });
+ ```
+
+What is that funky syntax?  `import DS from 'ember-data'` and `export default DSModel.extend()`?  Welcome to the world of tomorrow!
+
+Those `import` and `export` statements use ECMAScript 6 module syntax. Thanks to the magic of transpilers, we can already use them today even though no browsers support ES6 yet.  This should look familiar if you have used Node.js or AMD modules, there's just slightly different syntax.  We're importing a module from 'ember-data' and calling it `DS`.  Then we're extending the `DS.Model` class and using that as our module export.
+
+Our model specifies every field it should have, in this case `title` and `body`.  If we later decide we want another field (perhaps a published date) we just need to add it to our model:
+
+```js
+import DS from 'ember-data';
+
+export default DS.Model.extend({
+  title: DS.attr('string'),
+  body: DS.attr('string'),
+  publishedDate: DS.attr('date')
+});
+</code></pre>
+
+<h3 id="test-our-blog-post-model">Test our blog post model</h3>
+<p>Testing can seem daunting if you put it off for too long so lets get right to it and write a test for that model we just created. Ember-CLI has us covered. When we generated our blog post model Ember-CLI also generated a test module for our model:</p>
+<pre><code class="console">$ ls tests/unit/models
+blog-post-test.js
+</code></pre>
+
+<p>Pretty cool, huh? Let's open up <code>tests/unit/models/blog-post-test.js</code> and see what Ember-CLI generated for us:</p>
+<pre><code class="js">import {
+  moduleForModel,
+  test
+} from 'ember-qunit';
+
+moduleForModel('blog-post', {
+  // Specify the other units that are required for this test.
+
+});
+
+test('it exists', function(assert) {
+  var model = this.subject();
+  // var store = this.store();
+  assert.ok(!!model);
+});
+</code></pre>
+
+<p>That looks like a lot! First is the <code>import</code> statement. This imports the <code>ember-qunit</code> package we need for writing our test.</p>
+<p>The first section you see, <code>moduleForModel</code>, is where any necessary loading for the model testing will be done. Each test is self-contained, so any dependencies (for example if one model depends on another) must be defined here. We don't need to worry about this for our simple blog post model <em>yet</em>.</p>
+<p>The next section, <code>test</code>, shows how we define an individual test. One test can have many assertions but should test only one thing. The generator created a default test which asserts that our model exists.</p>
+<p>Since we have about as much as we can test in here already for our small model, let's make sure the tests pass by visiting <code>http://localhost:4200/tests</code> in your browser.</p>
+<p><strong>ProTip™</strong> If you ever need to know what generators are available, just type <code>ember help generate</code> and enjoy a deliciously long list of generating goodness.</p>
+<h2 id="adding-blog-posts-to-our-homepage">Adding blog posts to our homepage</h2>
+<h3 id="create-the-route">Create the route</h3>
+<p>If we want to see blog posts on our website, we need to render them into our HTML.  Ember's view layer places routes and their associated URLs front and center.  The way to show something is to create a route and associated template.</p>
+<p>Let's start once again from a generator, this time for our index page route:</p>
+<pre><code class="console">$ ember generate route index
+installing
+  create app/routes/index.js
+  create app/templates/index.hbs
+installing
+  create tests/unit/routes/index-test.js
+</code></pre>
+
+<p>This creates a few files for our index route and template file.</p>
+<p>Looking at <code>app/routes/index.js</code> we see:</p>
+<pre><code class="js">import Ember from 'ember';
+
+export default Ember.Route.extend({
+});
+</code></pre>
+
+<h3 id="update-the-template">Update the template</h3>
+<p>In order to make sure this is working, let's add some markup to <code>app/templates/blog-post.hbs</code> that will display a post:</p>
+<pre><code class="handlebars">{% raw %}
+&lt;article&gt;
+  &lt;header class=&quot;page-header&quot;&gt;
+    &lt;h1&gt;{{model.title}}&lt;/h1&gt;
+  &lt;/header&gt;
+  &lt;p&gt;{{model.body}}&lt;/p&gt;
+&lt;/article&gt;
+{% endraw %}
+</code></pre>
+
+<p>Since we happen to know there is a blog post with <code>id: 1</code> on our API server, we can manually visit <code>http://localhost:4200/post/1</code> in our browser to test with an example blog post.</p>
+<h3 id="the-magic-of-ember-data">The magic of Ember-Data</h3>
+<p>Ember-Data's REST Adapter comes with some freebies to save us time and unnecessary code. The adapter that we are using, <code>ActiveModelAdapter</code> is an extension of the REST Adapter, so we get to take advantage of this automagic if our application follows the URL conventions expected of the REST Adapter.</p>
+<p>Based on our route's dynamic URL segments the REST Adapter will make the proper calls to the application's API for the model hook.</p>
+<table class="table table-bordered table-striped">
+    <colgroup>
+        <col class="col-xs-2">
+        <col class="col-xs-2">
+        <col class="col-xs-8">
+    </colgroup>
+  <thead>
+    <tr>
+      <td>Action</td>
+      <td>HTTP Verb</td>
+      <td>URL</td>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Find</td>
+      <td>GET</td>
+      <td>/post/:blog_post_id</td>
+    </tr>
+    <tr>
+      <td>Find All</td>
+      <td>GET</td>
+      <td>/post</td>
+    </tr>
+    <tr>
+      <td>Update</td>
+      <td>PUT</td>
+      <td>/post/:blog_post_id</td>
+    </tr>
+    <tr>
+      <td>Create</td>
+      <td>POST</td>
+      <td>/post</td>
+    </tr>
+    <tr>
+      <td>Delete</td>
+      <td>DELETE</td>
+      <td>/post/:blog_post_id</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>ProTip™</strong> The store action determines the model name based on the defined dynamic segment. In our example <code>:blog_post_id</code> contains the proper snake-case name for our model with the suffix <code>_id</code> appended.</p>
+<p>To confirm that this works, <strong>delete the <code>app/routes/blog-post.js</code> file</strong> and verify that our blog post page (http://localhost:4200/post/1) still works properly after reload.</p>
+<p>NOTE:  Ember-CLI created a route test file automatically as well.  To make sure your tests continue to pass, if you delete <code>app/routes/blog-post.js</code> you should also delete <code>tests/unit/routes/blog-post-test.js</code></p>
+<h3 id="handlebars-link-to-helper">Handlebars link-to helper</h3>
+<p>Now that we have unique URLs for each blog post, we can link to these URLs from our index route.</p>
+<p>To add these links open up the <code>app/templates/index.hbs</code> file and add a <code>link-to</code> Handlebars helper around our blog title:</p>
+<pre><code class="handlebars">{% raw %}
+{{#each model as |post|}}
+  &lt;article&gt;
+    &lt;h2&gt;{{#link-to 'blogPost' post}}{{post.title}}{{/link-to}}&lt;/h2&gt;
+    {{post.body}}
+  &lt;/article&gt;
+{{/each}}
+{% endraw %}
+</code></pre>
+
+<p>Now take a look at <code>http://localhost:4200</code> and a link should appear. <strong>Click it!</strong> And now you're at the page for our blog post.</p>
+<h3 id="acceptance-testing">Acceptance testing</h3>
+<p>With some user interaction added to our application we can now create an acceptance test. The user flow for this test will be:</p>
+<ol>
+<li>Visit <code>/</code></li>
+<li>Click the first blog link</li>
+<li>Verify that the URL now matches <code>/post/:blog_post_id</code></li>
+</ol>
+<p>First we will have to generate our acceptance test.</p>
+<pre><code class="console">$ ember generate acceptance-test blog-post-show
+installing
+  create tests/acceptance/blog-post-show-test.js
+</code></pre>
+
+<p>Open the created file <code>tests/acceptance/blog-post-show-test.js</code> and see what is there:</p>
+<pre><code class="js">import Ember from 'ember';
+import {
+  module,
+  test
+} from 'qunit';
+import startApp from 'workshop/tests/helpers/start-app';
+
+var application;
+
+module('Acceptance: BlogPostShow', {
+  beforeEach: function() {
+    application = startApp();
+  },
+
+  afterEach: function() {
+    Ember.run(application, 'destroy');
+  }
+});
+
+test('visiting /blog-post-show', function(assert) {
+  visit('/blog-post-show');
+
+  andThen(function() {
+    assert.equal(currentPath(), 'blog-post-show');
+  });
+});
+</code></pre>
+
+<p>Let's first rename this test to something more applicable and remove the stuff inside.</p>
+<pre><code class="js">test('visit blog post from index', function(assert) {
+
+});
+</code></pre>
+
+<p>There are a few helpers here that we will use <strong>a lot</strong> when writing acceptance tests.</p>
+<ul>
+<li><code>visit(route)</code>: Visits the given route</li>
+<li><code>click(selector or element)</code>: Clicks the element and triggers any actions triggered by that element's click event</li>
+<li><code>andThen(callback)</code>: Waits for any preceding promises to continue</li>
+</ul>
+<p>Since <code>visit</code> and <code>click</code> are both asynchronous helpers we need to wrap subsequent logic in <code>andThen</code> to make sure actions complete before continuing onto the next step.</p>
+<p>Now we will code out the steps listed above to test that we can link to a blog post from index.</p>
+<pre><code class="js">test('visit blog post from index', function(assert) {
+  visit('/');
+  var blogSelector = 'article:first-of-type a';
+
+  andThen(function() {
+    click(blogSelector);
+  });
+
+  andThen(function() {
+    assert.equal(currentURL(), '/post/1');
+  });
+});
+</code></pre>
+
+<p>Verify the tests are passing by visiting <code>http://localhost:4200/tests</code> in the browser.</p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../comments/" class="btn btn-neutral float-right" title="Commenting">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../api/" class="btn btn-neutral" title="API"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+	  
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+<div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href="../api/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../comments/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+
+</body>
+</html>
