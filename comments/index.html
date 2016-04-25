@@ -95,14 +95,17 @@
         
             <ul>
             
-                <li class="toctree-l3"><a href="#blog-comments">Blog comments</a></li>
+                <li class="toctree-l3"><a href="#comments">Comments</a></li>
                 
-                    <li><a class="toctree-l4" href="#make-a-comment-model">Make a comment model</a></li>
+                    <li><a class="toctree-l4" href="#testing-with-dependencies">Testing with dependencies</a></li>
                 
-                    <li><a class="toctree-l4" href="#show-comments-on-a-blog-post">Show comments on a blog post</a></li>
+            
+                <li class="toctree-l3"><a href="#show-comments-on-a-blog-post">Show comments on a blog post</a></li>
                 
             
                 <li class="toctree-l3"><a href="#submitting-a-comment">Submitting a comment</a></li>
+                
+                    <li><a class="toctree-l4" href="#component-actions">Component actions</a></li>
                 
             
             </ul>
@@ -149,73 +152,65 @@
           <div role="main">
             <div class="section">
               
-                <h2 id="blog-comments">Blog comments</h2>
-<h3 id="make-a-comment-model">Make a comment model</h3>
-<p>We want users to be able to comment on blog posts. We've seen how to use <code>ember generate model</code> before to create our models. In this case, we want the comment to be a <code>string</code>, and our Rails API defines the content of these comments as <code>content</code>.</p>
+                <p>Now that we have posts, are able to list them, and view individual posts we would like to add functionality to comment on blog posts.</p>
+<h1 id="comments">Comments</h1>
+<p>We've seen how to use <code>ember generate model</code> before to create our models. In this case, we want the comment to be a <code>string</code>, and our Rails API defines the content of these comments as <code>content</code>.</p>
 <pre><code class="console">$ ember generate model comment content:string
-installing
-    create app/models/comment.js
-installing
-    create tests/unit/models/comment-test.js
+installing model
+  create app/models/comment.js
+installing model-test
+  create tests/unit/models/comment-test.js
 </code></pre>
 
 <p>We've seen this before.  Let's take a look at the model and see what it contains:</p>
-<pre><code class="js">import DS from 'ember-data';
+<pre><code class="js">import Model from 'ember-data/model';
+import attr from 'ember-data/attr';
 
-export default DS.Model.extend({
-  content: DS.attr('string')
- });
-</code></pre>
-
-<p>But our comments need to be aware of our blog posts, and vice versa. We're going to add a one-to-many relationship which is built into Ember Data for us.</p>
-<p>The comments need a <code>DS.belongsTo</code> since a comment belongs to a blog post:</p>
-<pre><code class="js">export default DS.Model.extend({
-  content: DS.attr('string'),
-  blogPost: DS.belongsTo('blogPost')
+export default Model.extend({
+  content: attr('string')
 });
 </code></pre>
 
-<p>Whereas the blog posts need a <code>DS.hasMany</code> since a blog post has many comments:</p>
-<pre><code class="js">export default DS.Model.extend({
-  title: DS.attr('string'),
-  body: DS.attr('string'),
-  publishedDate: DS.attr('date'),
-  comments: DS.hasMany('comment')
+<p>But our comments need to be aware of our blog posts, and vice versa. We're going to add a one-to-many relationship which is built into Ember Data for us. In order to use it, we need to import the base ember-data module.</p>
+<p>The comments need a <code>belongsTo</code> since a comment belongs to a blog post:</p>
+<pre><code class="js">import Model from 'ember-data/model';
+import attr from 'ember-data/attr';
+import DS from 'ember-data';
+
+const { belongsTo } = DS;
+
+export default Model.extend({
+  content: attr('string'),
+  blogPost: belongsTo('blog-post')
 });
 </code></pre>
 
-<p>Ember has a number of different ways to define relationships like this. You can <a href="http://guides.emberjs.com/v1.11.0/models/defining-models/#toc_defining-relationships">learn more here</a>.</p>
-<p>But, this isn't going to work as we have it! Remember how our API endpoints were <code>GET /blog_posts/:id</code> and <code>GET /comments/:id</code>? Our API response returns something like this:</p>
-<pre><code class="json">{
-    &quot;blog_post&quot;: {
-        &quot;id&quot;:2,
-        &quot;title&quot;: &quot;Hello, World&quot;,
-        &quot;body&quot;: &quot;Some body!&quot;,
-        &quot;published_date&quot; :null,
-        &quot;comment_ids&quot;: [1]
-    }
-}
-</code></pre>
+<p>Whereas the blog posts need a <code>hasMany</code> since a blog post has many comments:</p>
+<pre><code class="js">import Model from 'ember-data/model';
+import attr from 'ember-data/attr';
+import DS from 'ember-data';
 
-<p>Whomever built our API has decided to keep it really lightweight and not embed the comments inside the blog posts. This means we need to fetch the comments for these posts by hitting <code>GET /comments/:id</code> for every comment on our post.</p>
-<p>Ember Data calls this an asynchronous relationship, and we need to update our model in <code>app/models/blog-post.js</code> accordingly:</p>
-<pre><code class="js">export default DS.Model.extend({
-  // We just need to change the `DS.hasMany` to be async
-  comments: DS.hasMany('comment', {async: true})
+const { hasMany } = DS;
+
+export default Model.extend({
+  title: attr('string'),
+  body: attr('string'),
+  publishedDate: attr('date'),
+  comments: hasMany('comment')
 });
 </code></pre>
 
-<p>This tells Ember Data to do exactly what we said above: fetch the comments for these posts by hitting <code>GET /comments/:id</code> for every comment on our post. This happens asynchronously, meaning that while the blog post content has loaded, the comments may take a moment to load.</p>
-<h4 id="let-the-tests-know-about-these-dependencies">Let the tests know about these dependencies</h4>
-<p>Remember when we had only one model, with no relationships to other models? Those are easy to unit test in isolation. At this point, unfortunately, your tests should be failing, because they can't find either the <code>comment</code> dependency or <code>blogPost</code> dependency. When the tests need related models, you must tell Ember's test runner to load these dependencies.</p>
+<p>Ember has a number of different ways to define relationships like this. You can <a href="https://guides.emberjs.com/v2.4.0/models/relationships/">learn more here</a>.</p>
+<h2 id="testing-with-dependencies">Testing with dependencies</h2>
+<p>Remember when we had only one model with no relationships to other models? Those are easy to unit test in isolation. At this point, unfortunately, your tests should be failing, because they can't find either the <code>comment</code> dependency or <code>blogPost</code> dependency. When the tests need related models, you must tell Ember's test runner to load these dependencies.</p>
 <p>Find the following block in <code>tests/unit/models/blog-post-test.js</code>.</p>
-<pre><code class="js">moduleForModel('blog-post', {
+<pre><code class="js">moduleForModel('blog-post', 'Unit | Model | blog post', {
   // Specify the other units that are required for this test.
   needs: []
 });
 </code></pre>
 
-<p>You must fill out the <code>needs</code> property. To tell Ember about the comment dependency:</p>
+<p>You must fill out the <code>needs</code> property to tell Ember about the comment dependency:</p>
 <pre><code class="js">  needs: ['model:comment']
 </code></pre>
 
@@ -223,10 +218,9 @@ export default DS.Model.extend({
 <pre><code class="js">  needs: ['model:blogPost']
 </code></pre>
 
-<h3 id="show-comments-on-a-blog-post">Show comments on a blog post</h3>
+<h1 id="show-comments-on-a-blog-post">Show comments on a blog post</h1>
 <p>Let's get comments to show up on a blog post by adding to our <code>app/templates/blog-post.hbs</code>:</p>
-<pre><code class="handlebars">{% raw %}
-&lt;article&gt;
+<pre><code class="handlebars">&lt;article&gt;
   &lt;header class=&quot;page-header&quot;&gt;
     &lt;h1&gt;{{model.title}}&lt;/h1&gt;
   &lt;/header&gt;
@@ -239,113 +233,125 @@ export default DS.Model.extend({
   {{/each}}
   &lt;/ul&gt;
 &lt;/article&gt;
-{% endraw %}
 </code></pre>
 
-<p>We first loop through all the <code>model.comments</code> with Ember's (relatively new) syntax, defining <code>|comment|</code> as the local variable we use to access each <code>comment</code> model. Inside of this loop, we output the comment content we defined in our model with <code>content: DS.attr('string')</code> with <code>{% raw %}{{comment.content}}{% endraw %}</code>.</p>
+<p>We first loop through all the <code>model.comments</code> with Ember's each syntax, defining <code>|comment|</code> as the local variable we use to access each <code>comment</code> model. Inside of this loop, we output the comment content we defined in our model with <code>content: attr('string')</code> with <code>{{comment.content}}</code>.</p>
 <p>But we also want a good user experience for our readers. They need to know when comments are being loaded and when there aren't any comments at all!</p>
-<p>For the loading case, we have to think about sort of object our <code>model.comments</code> happens to be. It's a <a href="http://emberjs.com/api/data/classes/DS.PromiseManyArray.html"><code>PromiseManyArray</code></a>, and in our templates we can hook into <a href="http://emberjs.com/api/classes/Ember.PromiseProxyMixin.html"><code>PromiseProxyMixin</code></a>'s loading states. We're given access to: <code>isPending</code>, <code>isSettled</code>, <code>isRejected</code>, and <code>isFulfilled</code>.</p>
+<p>For the loading case, we have to think about sort of object our <code>model.comments</code> happens to be. It's a <a href="http://emberjs.com/api/data/classes/DS.PromiseManyArray.html"><code>PromiseManyArray</code></a>, and in our templates we can hook into the loading states made available by <a href="http://emberjs.com/api/classes/Ember.PromiseProxyMixin.html"><code>PromiseProxyMixin</code></a>. The available states are:
+<em> <code>isPending</code>
+</em> <code>isSettled</code>
+<em> <code>isRejected</code>
+</em> <code>isFulfilled</code></p>
 <p>We can update our template to make use of this new property:</p>
-<pre><code class="handlebars">{% raw %}
-  &lt;h2&gt;Comments&lt;/h2&gt;
-  {{#if model.comments.isPending}}
-    &lt;p&gt;Loading...&lt;/p&gt;
-  {{else}}
-    &lt;ul&gt;
-    ...
-    &lt;/ul&gt;
-  {{/if}}
-{% endraw %}
+<pre><code class="handlebars">&lt;h2&gt;Comments&lt;/h2&gt;
+{{#if model.comments.isPending}}
+  &lt;p&gt;Loading...&lt;/p&gt;
+{{else}}
+  &lt;ul&gt;
+  ...
+  &lt;/ul&gt;
+{{/if}}
 </code></pre>
 
 <p>Now our users know when comments are still loading and aren't presented with an ugly empty list of comments. If we wanted to go above and beyond, we could add a loading indicator here to indicate the comments are being loaded, but we'll move on.</p>
-<p>We also want to handle the empty case, which is a lot easier. We can make use of Handlebars' <code>{{#if something}} {{else}} {{/if}}</code> syntax here:</p>
-<pre><code class="handlebars">{% raw %}
-  &lt;h2&gt;Comments&lt;/h2&gt;
-  {{#if model.comments.isPending}}
-    &lt;p&gt;Loading...&lt;/p&gt;
+<p>We also want to handle the empty case. We can make use of Handlebars' if construct here:</p>
+<pre><code class="handlebars">&lt;h2&gt;Comments&lt;/h2&gt;
+{{#if model.comments.isPending}}
+  &lt;p&gt;Loading...&lt;/p&gt;
+{{else}}
+  {{#if model.comments}}
+    &lt;ul&gt;
+    {{#each model.comments as |comment|}}
+      &lt;li&gt;{{comment.content}}&lt;/li&gt;
+    {{/each}}
+    &lt;/ul&gt;
   {{else}}
-    {{#if model.comments}}
-      &lt;ul&gt;
-      {{#each model.comments as |comment|}}
-        &lt;li&gt;{{comment.content}}&lt;/li&gt;
-      {{/each}}
-      &lt;/ul&gt;
-    {{else}}
-      &lt;p&gt;There are no comments yet.&lt;/p&gt;
-    {{/if}}
+    &lt;p&gt;There are no comments yet.&lt;/p&gt;
   {{/if}}
-{% endraw %}
+{{/if}}
 </code></pre>
 
 <p>If there are comments, we iterate over them. If there are none, we add a helpful message to the user to let them know there aren't any comments yet.</p>
-<h4 id="avoiding-multiple-get-requests-for-comments">Avoiding multiple GET requests for comments</h4>
-<p>Remember once more how we were hitting <code>GET /comments/:id</code> for every comment on our post? Our API developer probably didn't expect us to make 101 server requests every time we hit a blog post with 100 comments.</p>
-<p>Ember Data once again has solved our use case with <a href="http://emberjs.com/api/data/classes/DS.ActiveModelAdapter.html#property_coalesceFindRequests"><code>coalesceFindRequests</code></a>, which lumps all of our individual <code>GET</code> requests together into a single request. If you had a <code>blogPost</code> like the following:</p>
-<pre><code class="json">{
-  &quot;blogPost&quot;: {
-    &quot;id&quot;: 1,
-    &quot;comment_ids&quot;: [1, 2]
-  }
-}
+<h1 id="submitting-a-comment">Submitting a comment</h1>
+<p>We can see existing comments on our blog but users have no way to submit comments yet, so let's make a form for users to submit comments.</p>
+<p>Let's make a commenting component to handle the form and submission for a new comment. To begin, we'll use a generator.</p>
+<pre><code class="console">$ ember generate component comment-form
+installing component
+  create app/components/comment-form.js
+  create app/templates/components/comment-form.hbs
+installing component-test
+  create tests/integration/components/comment-form-test.js
 </code></pre>
 
-<p>...and set <code>coalesceFindRequests</code> to <code>true</code> at the adapter level, Ember Data will transform our outbound requests to:</p>
-<pre><code>GET /comments?ids[]=1&amp;ids[]=2
+<p>Let's add this new component to our <code>blog-post.hbs</code></p>
+<pre><code class="handlebars">&lt;hr&gt;
+
+{{comment-form}}
 </code></pre>
 
-<p>Let's do that now. Open up <code>app/adapters/application.js</code> and modify it to set <code>coalesceFindRequests</code> to <code>true</code>:</p>
-<pre><code class="js">export default DS.ActiveModelAdapter.extend({
-  coalesceFindRequests: true
-});
-</code></pre>
-
-<p>That's it! Our Ember app now automatically hits a single URL for all the comments for a given post.</p>
-<p>Not that we haven't written any acceptance tests. We should, but in the interest of time this is left as an exercise for you.</p>
-<h2 id="submitting-a-comment">Submitting a comment</h2>
-<p>We can see existing comments on our blog but users have no way to submit comments yet!  Let's make a form for users to submit comments.</p>
-<p>First let's add a form to our template right before our closing <code>&lt;/article&gt;</code> tag:</p>
-<pre><code class="handlebars">{% raw %}
-&lt;hr&gt;
-
-&lt;form {{action 'addComment' on='submit'}}&gt;
+<p>Now if we open up our <code>comment-form.hbs</code> component template we can add in our form. When we open this up, we'll initially see a <code>{{yeild}}</code> statement. Components can either be rendered alone or can wrap in a block form. For our example we're going to keep it simple and render only the component. Replace the existing <code>{{yield}}</code> statement with the fllowing:</p>
+<pre><code class="handlebars">&lt;form {{action 'saveComment' on='submit'}}&gt;
   &lt;div class=&quot;form-group&quot;&gt;
     {{textarea value=commentContent class='form-control' rows='3'}}
   &lt;/div&gt;
   &lt;button type=&quot;submit&quot; class=&quot;btn btn-primary&quot;&gt;Add My Comment!&lt;/button&gt;
 &lt;/form&gt;
-{% endraw %}
 </code></pre>
 
-<p>We need to handle our <code>addComment</code> action and actually save a new comment.  We should use a controller to handle this action.  Let's generate a controller for our blog post page:</p>
-<pre><code class="console">$ ember generate controller blog-post
-installing
-  create app/controllers/blog-post.js
-  installing
-    create tests/unit/controllers/blog-post-test.js
+<p>If we visit the browser, we should see our comment form now on an individual post page. Though, it won't be wired up yet to work.</p>
+<h2 id="component-actions">Component actions</h2>
+<p>In Ember-land you'll often hear the phrase "data down, actions up". This is applicable to components as well. We want to pass any data the component needs to render properly in when we call it, and any actions that the component needs to trigger will happen outside of the component.</p>
+<p>For our comment form, we don't need to pass any data down but we will need to save the comment when the form submits. This is an action and should be handled outside of the component code, often in the <code>route</code>.</p>
+<p>Let's create an action inside of our <code>blog-post</code> route. If you remember, we actually <strong>deleted</strong> our blog-post route (and test) in the last section. We can add it back in again easily. The <code>generate</code> command will prompt us when it encounters already existing files, like our template for <code>blog-post</code> which we kept, so that we don't overwrite it.</p>
+<pre><code class="console">$ ember generate route blog-post
+installing route
+? Overwrite app/templates/blog-post.hbs? No, skip
+  create app/routes/blog-post.js
+  skip app/templates/blog-post.hbs
+updating router
+  add route blog-post
+installing route-test
+  create tests/unit/routes/blog-post-test.js
 </code></pre>
 
-<p>Now let's open up a controller file and add our action:</p>
-<pre><code class="javascript">import Ember from 'ember';
+<p>Now we can open up our <code>blog-post</code> route and add an action to handle the comment submission:</p>
+<pre><code class="js">import Ember from 'ember';
 
-export default Ember.Controller.extend({
+export default Ember.Route.extend({
   actions: {
-    addComment: function() {
-      var controller = this;
+    saveComment(comment) {
+      let blogPost = this.controller.get('model');
       this.store.createRecord('comment', {
-        blogPost: this.get('content'),
-        content: this.get('commentContent')
-      }).save().then(function() {
-        controller.set('commentContent', '');
-      });
+        blogPost: blogPost,
+        content: comment
+      }).save();
     }
   }
 });
 </code></pre>
 
-<p>That's some chaining!  What's going on here?</p>
-<p>So our <code>addComment</code> action first creates a <code>Comment</code> record and puts it in our <code>ember-data</code> store in our browser, with the blog post and comment content text fields filled in.  Nothing has been submitted to the server at this point.</p>
-<p>Our <code>createRecord</code> call returns our newly created comment model.  On this model we immediately call <code>save</code> to save it to the server, creating our new comment.  The <code>save</code> call returns a promise that will resolve when the API call returns with a success response.  By using our promise's <code>then</code> function, we supplied a function to call after our promise resolves.  Our post-resolve function will clear out the comment content so we can submit another comment if we wish.</p>
+<p>Actions in Ember are handled in the <code>actions: {}</code> hash on an object. We're going to assume that our component will pass us the content of our comment to save. We can use <code>store.createRecord</code> which takes the type of model as well as the hash to save and returns a promise.</p>
+<p>We have to pass this action into our component when we create it so it knows what action to use on submission so let's add it back in our <code>blog-post.hbs</code>:</p>
+<pre><code class="handlebars">{{comment-form saveComment='saveComment'}}
+</code></pre>
+
+<p>We're almost there! Now we just need to handle the action behavior inside the component. The component is still responsible for sending the action up. Let's open up our <code>comment-form.js</code> and add this:</p>
+<pre><code class="js">import Ember from 'ember';
+
+export default Ember.Component.extend({
+  commentContent: '',
+
+  actions: {
+    saveComment() {
+      let comment = this.get('commentContent');
+      this.sendAction('saveComment', comment);
+      this.set('commentContent', '');
+    }
+  }
+});
+</code></pre>
+
+<p>Now when we browse to an individual post we should be able to add a comment. Give it a try!</p>
               
             </div>
           </div>
