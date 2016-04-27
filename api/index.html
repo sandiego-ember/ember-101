@@ -147,7 +147,7 @@
                 <h1 id="accessing-our-api-with-ember-data">Accessing our API with ember-data</h1>
 <p>Ember is a client side framework and so when we have data that we want to persist we need a back-end API.  We want an API to serve up our blog posts and allow users to view and submit comments.</p>
 <p>We could use fixtures or a mock API but some friendly back-end developers have already made a working API for us so let's use that.</p>
-<p>Our API is setup at https://sandiego-ember-cli-101.herokuapp.com supporting the following endpoints</p>
+<p>Our API is setup at https://ember-101-api.herokuapp.com supporting the following endpoints</p>
 <table class="table table-bordered table-striped">
   <colgroup>
     <col class="col-xs-1">
@@ -210,8 +210,8 @@ export default JSONAPIAdapter.extend({
 
 <p>We're using an Ember Data built-in adapter called the JSONAPIAdapter. Building a custom adapter isn't too hard, but we don't need to because we're going to use the default.</p>
 <p>Finally, to point our Ember app at the API we've set up, let's go back to our server, hit <code>CTRL-C</code> to stop it, and restart <code>ember serve</code> using the proxy option to point Ember to the API we want to access:</p>
-<pre><code class="console">$ ember serve --proxy https://sandiego-ember-cli-101.herokuapp.com
-Proxying to https://sandiego-ember-cli-101.herokuapp.com
+<pre><code class="console">$ ember serve --proxy https://ember-101-api.herokuapp.com
+Proxying to https://ember-101-api.herokuapp.com
 Livereload server on http://localhost:49152
 Serving on http://localhost:4200/
 </code></pre>
