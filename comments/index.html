@@ -172,7 +172,7 @@ export default Model.extend({
 </code></pre>
 
 <p>But our comments need to be aware of our blog posts, and vice versa. We're going to add a one-to-many relationship which is built into Ember Data for us. In order to use it, we need to import the base ember-data module.</p>
-<p>The comments need a <code>belongsTo</code> since a comment belongs to a blog post:</p>
+<p>The comments need a <code>belongsTo</code> since a comment belongs to a blog post, so edit the <code>app/models/comment.js</code> file:</p>
 <pre><code class="js">import Model from 'ember-data/model';
 import attr from 'ember-data/attr';
 import DS from 'ember-data';
@@ -185,7 +185,7 @@ export default Model.extend({
 });
 </code></pre>
 
-<p>Whereas the blog posts need a <code>hasMany</code> since a blog post has many comments:</p>
+<p>Whereas the blog posts need a <code>hasMany</code> since a blog post has many comments, so edit the <code>app/models/blog-post.js</code> file:</p>
 <pre><code class="js">import Model from 'ember-data/model';
 import attr from 'ember-data/attr';
 import DS from 'ember-data';
