@@ -197,8 +197,13 @@
         }, 
         {
             "location": "/next/", 
-            "text": "Where do I go next?\n\n\nThere are many great resources available to continue your learning with Ember. The book \nRock n' Roll with Ember.js\n by Balinti Erdi is a book that slowly introduces concepts and best practices as you build an Ember application. It crushes the perceived learning curve of Ember and helps to overcome that initial frustration, and help you grok Ember a lot faster, by pinpointing the core concepts and explaining them in detail.\n\n\nThe Ember guides are great for diving deep once you understand the fundamentals. They're also versioned so you can be sure you're looking at accurate information for whatever version you happen to be working with.\n\n\nThanks to everyone who helped out\n\n\nEchobind - Sponsors\n\n\nInstructors\n\n\nMichael Yared\n\n\nHeather Brysiewicz\n\n\nJosh Smith\n\n\nXavier Lange\n\n\nTrey Hunner\n\n\nScott Newcomer\n\n\nDrew Purdy\n\n\nBenjamin Rhodes\n\n\nMatt Petersen\n\n\nMatt Schick", 
+            "text": "Feedback\n\n\nhttps://hbrysiewicz.typeform.com/to/DMKtHS\n\n\nPlease take 2 minutes to complete our breif workshop feedback form!\n\n\nWhere do I go next?\n\n\nThere are many great resources available to continue your learning with Ember. The book \nRock n' Roll with Ember.js\n by Balinti Erdi is a book that slowly introduces concepts and best practices as you build an Ember application. It crushes the perceived learning curve of Ember and helps to overcome that initial frustration, and help you grok Ember a lot faster, by pinpointing the core concepts and explaining them in detail.\n\n\nThe Ember guides are great for diving deep once you understand the fundamentals. They're also versioned so you can be sure you're looking at accurate information for whatever version you happen to be working with.\n\n\nThanks to everyone who helped out\n\n\nEchobind - Sponsors\n\n\nInstructors\n\n\nMichael Yared\n\n\nHeather Brysiewicz\n\n\nJosh Smith\n\n\nXavier Lange\n\n\nTrey Hunner\n\n\nScott Newcomer\n\n\nDrew Purdy\n\n\nBenjamin Rhodes\n\n\nMatt Schick", 
             "title": "What's Next & Thanks"
+        }, 
+        {
+            "location": "/next/#feedback", 
+            "text": "https://hbrysiewicz.typeform.com/to/DMKtHS  Please take 2 minutes to complete our breif workshop feedback form!", 
+            "title": "Feedback"
         }, 
         {
             "location": "/next/#where-do-i-go-next", 
@@ -259,11 +264,6 @@
             "location": "/next/#benjamin-rhodes", 
             "text": "", 
             "title": "Benjamin Rhodes"
-        }, 
-        {
-            "location": "/next/#matt-petersen", 
-            "text": "", 
-            "title": "Matt Petersen"
         }, 
         {
             "location": "/next/#matt-schick", 
