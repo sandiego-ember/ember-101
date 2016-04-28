@@ -196,8 +196,7 @@ module.exports = function(defaults) {
 <p><strong>ProTip™</strong> As we mentioned before, ember-cli uses live-reloading to persist changes to the browser without the need of reloading. As long as <code>http://localhost:4200/</code> is open, you'll see changes immediately. Neat! However, if you edit <code>ember-cli-build.js</code>, like we just did in this step, you will need to <strong>kill</strong> and <strong>restart</strong> <code>ember serve</code>. Then refresh <code>http://localhost:4200/</code>.</p>
 <p>The font of our header should have changed.</p>
 <p>Now let's add a big header introducing our blog.  Let's update our <code>application.hbs</code> file to add a jumbotron header and wrap our page content in a Bootstrap <code>container</code>:</p>
-<pre><code class="handlebars">{% raw %}
-&lt;div class=&quot;jumbotron&quot;&gt;
+<pre><code class="handlebars">&lt;div class=&quot;jumbotron&quot;&gt;
   &lt;div class=&quot;container&quot;&gt;
     &lt;h1&gt;Bernice's Blog&lt;/h1&gt;
   &lt;/div&gt;
@@ -206,7 +205,6 @@ module.exports = function(defaults) {
 &lt;div class=&quot;container&quot;&gt;
   {{outlet}}
 &lt;/div&gt;
-{% endraw %}
 </code></pre>
 
 <p>Our site should have refreshed in our web browser now, revealing a big header for our blog.</p>
